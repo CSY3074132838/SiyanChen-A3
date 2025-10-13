@@ -1,17 +1,72 @@
-import {Router} from 'express';
-import {listEvents,getEventWithRegistrations,createEvent,updateEvent,deleteEvent} from '../event_db.js';
-const r=Router();
+import express from 'express';
+import { db } from '../event_db.js';
 
-r.get('/',async(req,res)=>res.json(await listEvents()));
-r.get('/:id',async(req,res)=>{
-  const ev=await getEventWithRegistrations(req.params.id);
-  if(!ev)return res.status(404).json({error:'Not found'});
-  res.json(ev);
+const router = express.Router();
+
+// 获取全部活动（含分类）
+router.get('/', (req, res) => {
+  const sql = `
+    SELECT e.*, c.name AS category_name 
+    FROM events e 
+    JOIN categories c ON e.category_id = c.id
+    WHERE e.status = 'active'
+  `;
+  db.query(sql, (err, data) => {
+    if (err) return res.status(500).json({ success: false, message: err.message });
+    res.json({ success: true, data });
+  });
 });
-r.post('/',async(req,res)=>res.status(201).json(await createEvent(req.body)));
-r.put('/:id',async(req,res)=>res.json(await updateEvent(req.params.id,req.body)));
-r.delete('/:id',async(req,res)=>{
-  try{await deleteEvent(req.params.id);res.json({ok:true});}
-  catch(e){if(e.code==='HAS_REG')return res.status(409).json({error:e.message});throw e;}
+
+// 获取单个活动及其注册列表
+router.get('/:id', (req, res) => {
+  const eventId = req.params.id;
+  const eventSql = `SELECT * FROM events WHERE id = ?`;
+  const regSql = `SELECT * FROM registrations WHERE event_id = ? ORDER BY registered_at DESC`;
+
+  db.query(eventSql, [eventId], (err, eventData) => {
+    if (err) return res.status(500).json({ success: false, message: err.message });
+    if (!eventData.length) return res.status(404).json({ success: false, message: 'Event not found' });
+
+    db.query(regSql, [eventId], (err2, regData) => {
+      if (err2) return res.status(500).json({ success: false, message: err2.message });
+      res.json({ success: true, event: eventData[0], registrations: regData });
+    });
+  });
 });
-export default r;
+
+// 管理员：创建活动
+router.post('/', (req, res) => {
+  const { title, start_time, end_time, venue, city, category_id, goal_amount } = req.body;
+  const sql = `
+    INSERT INTO events (title, start_time, end_time, venue, city, category_id, goal_amount, status)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'active')
+  `;
+  db.query(sql, [title, start_time, end_time, venue, city, category_id, goal_amount], (err) => {
+    if (err) return res.status(500).json({ success: false, message: err.message });
+    res.json({ success: true, message: 'Event created successfully' });
+  });
+});
+
+// 管理员：更新活动
+router.put('/:id', (req, res) => {
+  const { id } = req.params;
+  db.query('UPDATE events SET ? WHERE id = ?', [req.body, id], (err) => {
+    if (err) return res.status(500).json({ success: false, message: err.message });
+    res.json({ success: true, message: 'Event updated successfully' });
+  });
+});
+
+// 管理员：删除活动（若有注册则阻止）
+router.delete('/:id', (req, res) => {
+  const { id } = req.params;
+  db.query('SELECT COUNT(*) AS cnt FROM registrations WHERE event_id = ?', [id], (err, result) => {
+    if (err) return res.status(500).json({ success: false, message: err.message });
+    if (result[0].cnt > 0) return res.status(400).json({ success: false, message: 'Cannot delete event with registrations' });
+    db.query('DELETE FROM events WHERE id = ?', [id], err2 => {
+      if (err2) return res.status(500).json({ success: false, message: err2.message });
+      res.json({ success: true, message: 'Event deleted' });
+    });
+  });
+});
+
+export default router;
