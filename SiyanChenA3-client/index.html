@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Charity Events - Home</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <header><h1>🌟 Charity Events</h1></header>
+  <main>
+    <section id="event-list" class="grid"></section>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script>
+  async function loadEvents() {
+    const events = await apiGet('/events');
+    const list = document.getElementById('event-list');
+    list.innerHTML = events.map(ev => `
+      <article class="card">
+        <img src="${ev.hero_image_url}" alt="">
+        <h3>${ev.title}</h3>
+        <p>${ev.short_desc ?? ''}</p>
+        <p>${new Date(ev.start_time).toLocaleString()}</p>
+        <button onclick="location.href='event.html?id=${ev.id}'">View Details</button>
+      </article>
+    `).join('');
+  }
+  loadEvents();
+  </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register Event</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <header><a href="index.html">← Back</a><h2>Event Registration</h2></header>
+  <main>
+    <section id="ev"></section>
+    <form id="regForm">
+      <label>Name<input name="full_name" required></label>
+      <label>Email<input type="email" name="email" required></label>
+      <label>Phone<input name="phone"></label>
+      <label>Tickets<input type="number" name="tickets" value="1" min="1" required></label>
+      <label>Notes<input name="notes"></label>
+      <button type="submit">Submit</button>
+    </form>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/register.js"></script>
+</body>
+</html>
