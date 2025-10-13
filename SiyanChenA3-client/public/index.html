@@ -1,0 +1,61 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Charity Hub — Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+  <!-- 🔹 导航栏 -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="./index.html" class="logo">💝 Charity Hub</a>
+      <ul class="nav-menu">
+        <li><a class="nav-link" href="./index.html">Home</a></li>
+        <li><a class="nav-link" href="./search.html">Search Events</a></li>
+        <li><span id="user-info"></span></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- 🔹 顶部横幅 -->
+  <header class="hero">
+    <div class="container">
+      <h1>Welcome to Charity Hub</h1>
+      <p class="muted">Connecting you to meaningful events that fund real change.</p>
+    </div>
+  </header>
+
+  <!-- 🔹 主内容 -->
+  <main class="container">
+    <section>
+      <h2>Upcoming Events</h2>
+      <div id="events" class="cards"></div>
+      <p id="home-error" class="error" hidden></p>
+    </section>
+
+    <section id="about">
+      <h2>About the Organisation</h2>
+      <p>
+        We collaborate with local non-profits to make it easy for you to discover, support, 
+        and participate in events that make a difference. Every ticket purchased fuels a cause.
+      </p>
+    </section>
+
+    <section id="contact">
+      <h2>Contact Us</h2>
+      <p>Email: <a href="mailto:support@charityhub.example">support@charityhub.example</a> | Phone: +81-3-0000-0000</p>
+    </section>
+  </main>
+
+  <!-- 🔹 底部 -->
+  <footer class="footer">
+    <p>© 2025 Charity Hub — Empowering Communities Together</p>
+  </footer>
+
+  <script src="./js/api.js"></script>
+  <script src="./js/home.js"></script>
+</body>
+</html>

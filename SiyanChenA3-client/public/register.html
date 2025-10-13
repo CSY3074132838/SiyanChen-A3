@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Charity Hub — Register for Event</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="./css/style.css" />
+  <style>
+    main {
+      max-width: 700px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .event-info {
+      text-align: center;
+      color: #475569;
+      margin-bottom: 20px;
+    }
+
+    form {
+      display: grid;
+      gap: 16px;
+    }
+
+    label {
+      font-weight: 600;
+      color: #334155;
+    }
+
+    input, select {
+      padding: 10px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      width: 100%;
+      font-size: 15px;
+    }
+
+    .btn-submit {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn-submit:hover {
+      background: #1e40af;
+    }
+
+    .success {
+      background: #dcfce7;
+      border: 1px solid #86efac;
+      color: #166534;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+      margin-top: 16px;
+    }
+
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="./index.html" class="logo">💝 Charity Hub</a>
+      <ul class="nav-menu">
+        <li><a class="nav-link" href="./index.html">Home</a></li>
+        <li><a class="nav-link" href="./search.html">Search Events</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <h1 id="title">Register for Event</h1>
+    <p id="event-info" class="event-info"></p>
+
+    <form id="reg-form">
+      <div>
+        <label>Full Name</label>
+        <input type="text" name="user_name" required placeholder="Enter your name" />
+      </div>
+      <div>
+        <label>Contact (Email or Phone)</label>
+        <input type="text" name="contact" required placeholder="e.g., john@example.com" />
+      </div>
+      <div>
+        <label>Number of Tickets</label>
+        <input type="number" name="tickets" min="1" max="10" value="1" required />
+      </div>
+      <button type="submit" class="btn-submit">Submit Registration</button>
+    </form>
+
+    <p id="success" class="success" hidden>Registration successful!</p>
+  </main>
+
+  <script src="./js/api.js"></script>
+  <script src="./js/register.js"></script>
+</body>
+</html>
