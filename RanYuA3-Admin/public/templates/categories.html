@@ -1,0 +1,72 @@
+<!-- 分类管理模板 -->
+<header class="hero">
+  <div class="container">
+    <h1>Category Management</h1>
+    <p>Manage event categories</p>
+  </div>
+</header>
+
+<main class="container">
+  <!-- 添加新分类 -->
+  <section class="add-category">
+    <h2>Add New Category</h2>
+    <form ng-submit="addCategory()" class="category-form">
+      <div class="form-group">
+        <label for="categoryName">Category Name</label>
+        <input type="text" ng-model="newCategory.name" id="categoryName" placeholder="e.g., Gala Dinner" required />
+      </div>
+      <div class="form-group">
+        <label for="categorySlug">Category Slug</label>
+        <input type="text" ng-model="newCategory.slug" id="categorySlug" placeholder="e.g., gala-dinner" required />
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn" ng-disabled="loading">
+          <span ng-show="loading">Adding...</span>
+          <span ng-show="!loading">Add Category</span>
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <!-- 分类列表 -->
+  <section class="categories-list">
+    <h2>Existing Categories</h2>
+    <div ng-show="loading" class="loading">Loading...</div>
+    <div ng-show="error" class="error">{{error}}</div>
+    
+    <div ng-show="!loading && !error" class="categories-grid">
+      <div ng-repeat="category in categories" class="category-card">
+        <div ng-show="!editingCategory || editingCategory.id !== category.id">
+          <h3>{{category.name}}</h3>
+          <p class="category-slug">{{category.slug}}</p>
+          <div class="category-actions">
+            <button ng-click="editCategory(category)" class="btn btn-small">Edit</button>
+            <button ng-click="deleteCategory(category)" class="btn btn-small btn-danger">Delete</button>
+          </div>
+        </div>
+        
+        <!-- 编辑模式 -->
+        <div ng-show="editingCategory && editingCategory.id === category.id" class="edit-form">
+          <form ng-submit="updateCategory()">
+            <div class="form-group">
+              <label>Category Name</label>
+              <input type="text" ng-model="editingCategory.name" required />
+            </div>
+            <div class="form-group">
+              <label>Category Slug</label>
+              <input type="text" ng-model="editingCategory.slug" required />
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-small">Update</button>
+              <button type="button" ng-click="cancelEdit()" class="btn btn-small btn-secondary">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+    <div ng-show="!loading && !error && categories.length === 0" class="no-categories">
+      <p>No categories found. Add your first category above.</p>
+    </div>
+  </section>
+</main>

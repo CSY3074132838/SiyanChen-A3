@@ -1,0 +1,39 @@
+<!-- Registrations Management Template -->
+<header class="hero">
+  <div class="container">
+    <h1>Registrations Management</h1>
+    <p>View all event registration information</p>
+  </div>
+</header>
+
+<main class="container">
+  <div ng-show="loading" class="loading">Loading...</div>
+  <div ng-show="error" class="error">{{error}}</div>
+  
+  <div ng-show="!loading && !error" class="admin-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Event Name</th>
+          <th>Registrant</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Registration Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="registration in registrations">
+          <td>{{registration.event_title}}</td>
+          <td>{{registration.name}}</td>
+          <td>{{registration.email}}</td>
+          <td>{{registration.phone || '-'}}</td>
+          <td>{{registration.created_at | formatDate}}</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div ng-show="registrations.length === 0" class="no-data">
+      No registration information found
+    </div>
+  </div>
+</main>

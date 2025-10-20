@@ -1,0 +1,74 @@
+<!-- Event Edit Template -->
+<header class="hero">
+  <div class="container">
+    <h1>{{isEdit ? 'Edit Event' : 'Create New Event'}}</h1>
+    <p>{{isEdit ? 'Modify event information' : 'Add new charity event'}}</p>
+  </div>
+</header>
+
+<main class="container">
+  <div ng-show="loading" class="loading">Loading...</div>
+  
+  <div ng-show="!loading" class="edit-form">
+    <form ng-submit="saveEvent()">
+      <div class="form-group">
+        <label for="title">Event Name *</label>
+        <input type="text" ng-model="event.title" id="title" required />
+      </div>
+      
+      <div class="form-group">
+        <label for="description">Event Description</label>
+        <textarea ng-model="event.description" id="description" rows="4"></textarea>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="start_time">Start Time *</label>
+          <input type="datetime-local" ng-model="event.start_time" id="start_time" required />
+        </div>
+        <div class="form-group">
+          <label for="end_time">End Time</label>
+          <input type="datetime-local" ng-model="event.end_time" id="end_time" />
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="venue">Venue</label>
+          <input type="text" ng-model="event.venue" id="venue" />
+        </div>
+        <div class="form-group">
+          <label for="city">City</label>
+          <input type="text" ng-model="event.city" id="city" />
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="category_id">Category</label>
+          <select ng-model="event.category_id" id="category_id">
+            <option value="">Select Category</option>
+            <option ng-repeat="category in categories" value="{{category.id}}">{{category.name}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="price">Price</label>
+          <input type="number" ng-model="event.price" id="price" min="0" step="0.01" />
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="hero_image_url">Event Image URL</label>
+        <input type="url" ng-model="event.hero_image_url" id="hero_image_url" />
+      </div>
+      
+      <div class="form-actions">
+        <button type="submit" class="btn" ng-disabled="saving">
+          <span ng-show="saving">Saving...</span>
+          <span ng-show="!saving">{{isEdit ? 'Update Event' : 'Create Event'}}</span>
+        </button>
+        <a href="#!/" class="btn btn-secondary">Cancel</a>
+      </div>
+    </form>
+  </div>
+</main>
