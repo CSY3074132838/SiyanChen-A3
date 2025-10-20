@@ -1,0 +1,39 @@
+<!-- Home Template -->
+<header class="hero">
+  <div class="container">
+    <h1>Welcome to Charity Hub</h1>
+    <p class="muted">Connecting you to meaningful events that fund real change.</p>
+  </div>
+</header>
+
+<main class="container">
+  <section>
+    <h2>Upcoming Events</h2>
+    <div ng-show="loading" class="loading">Loading...</div>
+    <div ng-show="error" class="error">{{error}}</div>
+    <div ng-show="!loading && !error" class="cards">
+      <article ng-repeat="event in events" class="card">
+        <img ng-src="{{event.hero_image_url || 'https://picsum.photos/seed/ch/' + event.id + '/400/200'}}" alt="Event image">
+        <div class="card-body">
+          <h3>{{event.title}}</h3>
+          <p class="badge">{{event.category_name}}</p>
+          <p class="muted">{{event.city}} · {{event.start_time | formatDate}}</p>
+          <a href="#!/event/{{event.id}}" class="btn">View Details</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="about">
+    <h2>About the Organisation</h2>
+    <p>
+      We collaborate with local non-profits to make it easy for you to discover, support, 
+      and participate in events that make a difference. Every ticket purchased fuels a cause.
+    </p>
+  </section>
+
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <p>Email: <a href="mailto:support@charityhub.example">support@charityhub.example</a> | Phone: +81-3-0000-0000</p>
+  </section>
+</main>

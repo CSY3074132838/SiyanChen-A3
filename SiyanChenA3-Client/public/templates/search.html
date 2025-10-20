@@ -1,0 +1,51 @@
+<!-- Search Page Template -->
+<header class="hero">
+  <div class="container">
+    <h1>Find Charity Events</h1>
+    <p>Search by date, city, or category to discover meaningful events near you</p>
+  </div>
+</header>
+
+<main class="container">
+  <form ng-submit="search()" class="search-form">
+    <div>
+      <label for="date">Date</label>
+      <input type="date" ng-model="searchForm.date" id="date" />
+    </div>
+    <div>
+      <label for="location">Location (City)</label>
+      <input type="text" ng-model="searchForm.location" id="location" placeholder="e.g., Tokyo" />
+    </div>
+    <div>
+      <label for="category">Category</label>
+      <select ng-model="searchForm.category" id="category">
+        <option value="">Any</option>
+        <option ng-repeat="category in categories" value="{{category.id}}">{{category.name}}</option>
+      </select>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn" ng-disabled="loading">
+        <span ng-show="loading">Searching...</span>
+        <span ng-show="!loading">🔍 Search</span>
+      </button>
+      <button type="button" ng-click="clearSearch()" class="btn btn-secondary">Clear</button>
+    </div>
+  </form>
+
+  <div ng-show="searched" id="results">
+    <h3>Search Results</h3>
+    <div ng-show="loading" class="loading">Searching...</div>
+    <div ng-show="!loading && results.length === 0" class="no-results">No matching events found</div>
+    <div ng-show="!loading && results.length > 0" class="cards">
+      <article ng-repeat="event in results" class="card">
+        <img ng-src="{{event.hero_image_url || 'https://picsum.photos/seed/ch/' + event.id + '/400/200'}}" alt="Event image">
+        <div class="card-body">
+          <h3>{{event.title}}</h3>
+          <p class="badge">{{event.category_name}}</p>
+          <p class="muted">{{event.city}} · {{event.start_time | formatDate}}</p>
+          <a href="#!/event/{{event.id}}" class="btn">View Details</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</main>

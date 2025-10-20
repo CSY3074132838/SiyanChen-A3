@@ -1,0 +1,20 @@
+{
+  "name": "charity-hub-angularjs-client",
+  "version": "1.0.0",
+  "description": "Charity Hub - AngularJS Client Application",
+  "main": "public/index.html",
+  "scripts": {
+    "start": "npx http-server -p 3001",
+    "dev": "npx http-server -p 3001 -o"
+  },
+  "dependencies": {
+    "http-server": "^14.1.1"
+  },
+  "devDependencies": {
+    "angular": "^1.8.3",
+    "angular-route": "^1.8.3"
+  },
+  "keywords": ["charity", "events", "angularjs", "client"],
+  "author": "Charity Hub Team",
+  "license": "MIT"
+}

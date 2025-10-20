@@ -1,0 +1,61 @@
+<!-- Event Details Template -->
+<div class="event-wrapper">
+  <main class="event-card">
+    <div ng-show="loading" class="loading">Loading...</div>
+    
+    <div ng-show="!loading && event">
+      <img ng-src="{{event.hero_image_url || 'https://picsum.photos/seed/ch/' + event.id + '/800/400'}}" 
+           class="hero-img" alt="Event banner" />
+      <h1 class="event-title">{{event.title}}</h1>
+      <p class="event-info">{{event.category_name}}</p>
+      <p class="event-date">{{event.start_time | formatDate}}</p>
+      <p class="event-info">{{event.venue}}</p>
+
+      <button ng-click="showRegister()" class="btn-register" ng-show="!showRegisterForm && !registerSuccess">
+        Register for Event
+      </button>
+
+      <!-- Registration Form -->
+      <div ng-show="showRegisterForm" class="register-form">
+        <h3>Event Registration</h3>
+        <form ng-submit="submitRegistration()">
+          <div class="form-group">
+            <label>Name *</label>
+            <input type="text" ng-model="registerForm.name" required />
+          </div>
+          <div class="form-group">
+            <label>Email *</label>
+            <input type="email" ng-model="registerForm.email" required />
+          </div>
+          <div class="form-group">
+            <label>Phone</label>
+            <input type="tel" ng-model="registerForm.phone" />
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn">Submit Registration</button>
+            <button type="button" ng-click="showRegisterForm = false" class="btn btn-secondary">Cancel</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Registration Success Message -->
+      <div ng-show="registerSuccess" class="success-message">
+        <h3>Registration Successful!</h3>
+        <p>Thank you for registering for this event. We will contact you via email.</p>
+      </div>
+
+      <!-- Registration List -->
+      <section class="reg-section">
+        <h3>Registered Users</h3>
+        <div ng-show="registrations.length === 0" class="no-registrations">No registered users yet</div>
+        <div ng-show="registrations.length > 0">
+          <div ng-repeat="reg in registrations" class="reg-item">
+            <i>👤</i>
+            <span>{{reg.name}}</span>
+            <span>({{reg.email}})</span>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>

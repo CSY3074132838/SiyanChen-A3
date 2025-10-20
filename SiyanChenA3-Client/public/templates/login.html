@@ -1,0 +1,28 @@
+<!-- Login Page Template -->
+<header class="hero">
+  <div class="container">
+    <h1>User Login</h1>
+    <p>Login to your account to participate in events</p>
+  </div>
+</header>
+
+<main class="container">
+  <div class="login-form">
+    <form ng-submit="login()">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" ng-model="loginForm.username" id="username" required />
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn" ng-disabled="loading">
+          <span ng-show="loading">Logging in...</span>
+          <span ng-show="!loading">Login</span>
+        </button>
+      </div>
+    </form>
+    
+    <p class="register-link">
+      Don't have an account? <a href="#!/register">Register now</a>
+    </p>
+  </div>
+</main>
